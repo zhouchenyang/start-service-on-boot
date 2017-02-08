@@ -1,0 +1,52 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          local
+# Required-Start:    $local_fs $network $named $time $syslog
+# Required-Stop:     $local_fs $network $named $time $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Description:       s3fs
+### END INIT INFO
+
+
+start() {
+  echo 'Starting service…' 
+  s3fs wecivil /home/civil/bucket_wecivil -o passwd_file=/home/civil/Desktop/credentials.csv -o nonempty
+}
+
+stop() {
+  echo 'Stopping service…' 
+  umount /home/civil/bucket_wecivil
+}
+
+install() {
+    update-rc.d local defaults
+}
+
+uninstall() {  
+    update-rc.d -f local remove
+}
+
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  uninstall)
+    uninstall
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  install)
+    install
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|install|uninstall}"
+esac
+
+ 
