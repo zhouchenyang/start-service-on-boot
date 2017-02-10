@@ -16,7 +16,7 @@ start() {
 
 stop() {
   echo 'Stopping service…' 
-  umount /home/civil/bucket_wecivil
+  fusermount -u /home/civil/bucket_wecivil
 }
 
 install() {
